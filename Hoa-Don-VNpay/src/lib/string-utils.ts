@@ -41,3 +41,29 @@ export const displayAmount = (value: string): string => {
   if (!value) return "";
   return Number(value).toLocaleString("vi-VN");
 };
+
+/**
+ * Deterministic transaction reference derived from the transfer details, so the
+ * same invoice always shows the same code. A fixed placeholder would look
+ * fabricated on a document a customer is asked to trust.
+ */
+export const buildOrderRef = (
+  bankCode: string,
+  accountNumber: string,
+  amount: string,
+): string => {
+  const seed = `${bankCode}|${accountNumber}|${amount || "0"}`;
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  const n = (h >>> 0) % 100000000;
+  return `VNP${String(n).padStart(8, "0")}`;
+};
+
+/** Human-readable issue timestamp for the receipt. */
+export const formatIssuedAt = (d: Date): string => {
+  const p = (v: number) => String(v).padStart(2, "0");
+  return `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`;
+};

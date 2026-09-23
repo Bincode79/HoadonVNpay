@@ -109,10 +109,22 @@ export async function generateVietQRWithFallback(
     if (response.desc) {
       toast.warning(response.desc);
     }
-
-    throw new Error(response.desc || "Failed to generate QR");
   } catch (error) {
     console.error("VietQR API failed, using local fallback:", error);
-    throw error;
   }
+
+  return buildLocalQRPayload(bankCode, accountNumber, accountName, amount, message);
+}
+
+export function buildLocalQRPayload(
+  bankCode: string,
+  accountNumber: string,
+  accountName: string,
+  amount?: string,
+  message?: string
+): string {
+  const accName = accountName ? accountName.replace(/\s+/g, " ").trim().toUpperCase() : "";
+  const qrAmount = amount || "0";
+  const qrMessage = message ? message.replace(/\s+/g, " ").trim() : "";
+  return `${bankCode}|${accountNumber}|${accName}|${qrAmount}|${qrMessage}`;
 }

@@ -21,6 +21,9 @@ export default defineConfig(async ({ mode }) => {
     server: {
       host: "::",
       port: 8080,
+      // Workspace preview hosts (see repo environment). Vite blocks unknown
+      // Host headers by default, which breaks proxied preview URLs.
+      allowedHosts: [".prod-runtime.all-hands.dev"],
       hmr: {
         overlay: false,
       },

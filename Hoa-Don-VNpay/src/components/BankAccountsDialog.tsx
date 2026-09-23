@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { X, Copy, Check } from "lucide-react";
+import { Copy, Check, Landmark, X } from "lucide-react";
 import { BANKS } from "@/data/banks";
+import { BankLogo } from "@/components/BankLogo";
 
 interface BankAccountsDialogProps {
   currentBankCode: string;
@@ -33,65 +34,89 @@ export function BankAccountsDialog({
   };
 
   const allAccounts = [
-    { bankCode: currentBankCode, accountNumber: currentAccountNumber, accountName: currentAccountName, isCurrent: true },
+    {
+      bankCode: currentBankCode,
+      accountNumber: currentAccountNumber,
+      accountName: currentAccountName,
+      isCurrent: true,
+    },
     ...SAMPLE_ACCOUNTS.filter((a) => a.accountNumber !== currentAccountNumber).slice(0, 9),
   ];
 
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1"
+        className="vv-btn-ghost-sm flex items-center gap-1.5"
       >
-        <span className="text-[10px] sm:text-xs text-[#0066FF] dark:text-blue-400 cursor-pointer hover:underline">Xem tài khoản 9 ngân hàng khác</span>
-        <span className="text-[9px] text-[#5A6A7A] dark:text-gray-400">(Click để xem)</span>
+        <Landmark className="h-3.5 w-3.5" strokeWidth={1.75} />
+        Danh sách tài khoản
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#E6EEF7] dark:border-gray-700">
-              <h3 className="text-sm font-semibold text-[#1a3a6b] dark:text-blue-300">TÀI KHOẢN NGÂN HÀNG</h3>
-              <button onClick={() => setOpen(false)} className="p-1 hover:bg-[#F5F6FA] dark:hover:bg-gray-700 rounded" aria-label="Đóng">
-                <X className="w-4 h-4 text-[#5A6A7A] dark:text-gray-400" />
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Danh sách tài khoản ngân hàng"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="vv-box w-full max-w-md overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-border px-4 py-3">
+              <h3 className="text-[15px] font-medium text-foreground">Tài khoản ngân hàng</h3>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="rounded-md p-1.5 text-vnpay-text-sub transition-colors hover:bg-muted"
+                aria-label="Đóng"
+              >
+                <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="overflow-y-auto p-4 space-y-3">
+
+            <div className="max-h-[70vh] space-y-2 overflow-y-auto p-3">
               {allAccounts.map((acc) => {
                 const bank = BANKS.find((b) => b.code === acc.bankCode);
                 const itemId = `${acc.bankCode}-${acc.accountNumber}`;
                 return (
                   <div
                     key={itemId}
-                    className={`rounded-xl border p-3 ${
-                      acc.isCurrent
-                        ? "border-[#1a3a6b] dark:border-blue-500 bg-[#F0F5FF] dark:bg-blue-900/30"
-                        : "border-[#DCE6F2] dark:border-gray-600"
+                    className={`rounded-md border p-3 ${
+                      acc.isCurrent ? "border-primary bg-vnpay-sub" : "border-border"
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      {bank?.logo && (
-                        <img src={bank.logo} alt="" className="w-5 h-5 object-contain" />
-                      )}
-                      <span className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">{bank?.name || acc.bankCode}</span>
+                    <div className="mb-2 flex items-center gap-2">
+                      {bank && <BankLogo bank={bank} size="xs" />}
+                      <span className="truncate text-[13px] font-medium text-foreground">
+                        {bank?.name || acc.bankCode}
+                      </span>
                       {acc.isCurrent && (
-                        <span className="text-[8px] bg-[#1a3a6b] dark:bg-blue-600 text-white px-1.5 py-0.5 rounded">Mặc định</span>
+                        <span className="ml-auto shrink-0 rounded-sm bg-primary px-1.5 py-0.5 text-[10px] font-semibold text-primary-foreground">
+                          Mặc định
+                        </span>
                       )}
                     </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-[10px] text-[#2D3A4A] dark:text-gray-100">{acc.accountName}</p>
-                        <p className="text-xs font-mono text-[#2D3A4A] dark:text-gray-100">{acc.accountNumber}</p>
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="truncate text-[11px] uppercase tracking-wide text-vnpay-text-sub">
+                          {acc.accountName}
+                        </p>
+                        <p className="truncate text-[14px] text-foreground">{acc.accountNumber}</p>
                       </div>
                       <button
+                        type="button"
                         onClick={() => handleCopy(acc.accountNumber, itemId)}
-                        className="p-1.5 rounded-lg hover:bg-[#E6EEF7] dark:hover:bg-gray-700 transition-colors"
+                        className="shrink-0 rounded-md p-1.5 text-vnpay-text-sub transition-colors hover:bg-muted hover:text-primary"
                         aria-label="Sao chép số tài khoản"
                       >
                         {copiedId === itemId ? (
-                          <Check className="w-4 h-4 text-green-600" />
+                          <Check className="h-4 w-4 text-vnpay-success" strokeWidth={2.5} />
                         ) : (
-                          <Copy className="w-4 h-4 text-[#5A6A7A] dark:text-gray-400" />
+                          <Copy className="h-4 w-4" strokeWidth={1.75} />
                         )}
                       </button>
                     </div>
