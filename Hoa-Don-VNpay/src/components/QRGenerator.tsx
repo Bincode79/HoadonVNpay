@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
+import { Printer, RotateCcw } from "lucide-react";
 import { QRForm } from "@/components/QRForm";
 import { QRResult } from "@/components/QRResult";
-import { createVietQRRequest, generateVietQR } from "@/services/vietqr";
-
-const QR_SIZES = [96, 128, 160, 192, 224, 256];
+import { BrandStrip, StatusBar, TopBar } from "@/components/VnpayShell";
+import { createVietQRRequest, generateVietQR, buildLocalQRPayload } from "@/services/vietqr";
 
 export default function QRGenerator() {
   const [searchParams] = useSearchParams();
@@ -15,18 +15,13 @@ export default function QRGenerator() {
   const [amount, setAmount] = useState(searchParams.get("amount") || "");
   const [message, setMessage] = useState(searchParams.get("msg") || "");
   const [generated, setGenerated] = useState(!!searchParams.get("bank") && !!searchParams.get("acc"));
-  const [qrSize] = useState(150);
-  const [logoSize, setLogoSize] = useState(36);
   const [useLocalQR, setUseLocalQR] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [qrData, setQrData] = useState<string>("");
 
   const qrValue = useMemo(() => {
     if (!bankCode || !accountNumber) return "";
-    const accName = accountName ? accountName.replace(/\s+/g, ' ').trim().toUpperCase() : "";
-    const qrAmount = amount || "0";
-    const qrMessage = message ? message.replace(/\s+/g, ' ').trim() : "";
-    return `${bankCode}|${accountNumber}|${accName}|${qrAmount}|${qrMessage}`;
+    return buildLocalQRPayload(bankCode, accountNumber, accountName, amount, message);
   }, [bankCode, accountNumber, accountName, amount, message]);
 
   const handleGenerate = useCallback(async () => {
@@ -81,43 +76,74 @@ export default function QRGenerator() {
     }
   }, [searchParams, handleGenerate]);
 
-  if (generated) {
-    return (
-      <QRResult
-        bankCode={bankCode}
-        accountNumber={accountNumber}
-        accountName={accountName}
-        amount={amount}
-        message={message}
-        qrValue={qrValue}
-        qrData={qrData}
-        useLocalQR={useLocalQR}
-        isLoading={isLoading}
-        logoSize={logoSize}
-        qrSize={qrSize}
-        onCopy={handleCopy}
-        onReset={handleReset}
-      />
-    );
-  }
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
 
   return (
-      <QRForm
-        bankCode={bankCode}
-        setBankCode={setBankCode}
-        accountNumber={accountNumber}
-        setAccountNumber={setAccountNumber}
-        accountName={accountName}
-        setAccountName={setAccountName}
-        amount={amount}
-        setAmount={setAmount}
-        message={message}
-        setMessage={setMessage}
-        logoSize={logoSize}
-        setLogoSize={setLogoSize}
-        isLoading={isLoading}
-        onGenerate={handleGenerate}
-        qrValue={qrValue}
+    <div className="flex h-screen max-h-screen flex-col overflow-hidden bg-background">
+      <TopBar merchantName="HoadonVNpay" showTimer={generated} />
+      {/* Panels and the brand strip form ONE centred group, so the strip sits
+          tight under the panels instead of being pushed to the page bottom. */}
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-3 overflow-hidden py-4">
+        <div className="w-full px-4">
+          {generated ? (
+            <QRResult
+              bankCode={bankCode}
+              accountNumber={accountNumber}
+              accountName={accountName}
+              amount={amount}
+              message={message}
+              qrValue={qrValue}
+              qrData={qrData}
+              useLocalQR={useLocalQR}
+              isLoading={isLoading}
+              onCopy={handleCopy}
+            />
+          ) : (
+            <QRForm
+              bankCode={bankCode}
+              setBankCode={setBankCode}
+              accountNumber={accountNumber}
+              setAccountNumber={setAccountNumber}
+              accountName={accountName}
+              setAccountName={setAccountName}
+              amount={amount}
+              setAmount={setAmount}
+              message={message}
+              setMessage={setMessage}
+              isLoading={isLoading}
+              onGenerate={handleGenerate}
+              qrValue={qrValue}
+            />
+          )}
+        </div>
+        <div className="no-print w-full shrink-0 px-4">
+          <BrandStrip />
+        </div>
+      </div>
+      <StatusBar
+        actions={
+          generated ? (
+            <>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="vv-btn-ghost-sm flex items-center gap-1.5"
+              >
+                <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.75} /> Tạo hóa đơn mới
+              </button>
+              <button
+                type="button"
+                onClick={handlePrint}
+                className="vv-btn-sub-sm flex items-center gap-1.5"
+              >
+                <Printer className="h-3.5 w-3.5" strokeWidth={1.75} /> In hóa đơn
+              </button>
+            </>
+          ) : null
+        }
       />
+    </div>
   );
 }

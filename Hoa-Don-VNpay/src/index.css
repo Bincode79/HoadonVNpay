@@ -1,69 +1,95 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   Design tokens mirror the real VNPay payment gateway.
+   Values (#0071a9, #21262c, #eaedf1, #f5f7f9, radii, shadows,
+   Inter @14px/-0.03em) are taken from VNPay's own shipped
+   stylesheets so this page reads as the genuine gateway.
+   ============================================================ */
 @layer base {
   :root {
-    --background: 210 20% 96%;
-    --foreground: 220 20% 20%;
+    --background: 210 25% 97%;          /* #f5f7f9 */
+    --foreground: 213 14% 15%;          /* #21262c */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 20%;
+    --card-foreground: 213 14% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 20%;
+    --popover-foreground: 213 14% 15%;
 
-    --primary: 216 85% 34%;
+    --primary: 200 100% 33%;            /* #0071a9 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 350 80% 46%;
+    --secondary: 200 100% 42%;          /* #1d9ec9 accent */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 15% 93%;
-    --muted-foreground: 215 12% 50%;
+    --muted: 210 25% 96%;
+    --muted-foreground: 211 20% 44%;    /* #5a7087 */
 
-    --accent: 210 40% 94%;
-    --accent-foreground: 216 85% 34%;
+    --accent: 201 44% 94%;              /* #e8f1f6 */
+    --accent-foreground: 200 100% 33%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 75% 45%;           /* #c91d1d */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 88%;
-    --input: 214 20% 85%;
-    --ring: 216 85% 34%;
+    --border: 214 20% 93%;              /* #eaedf1 */
+    --input: 210 26% 80%;               /* #bfccd9 */
+    --ring: 200 100% 33%;
 
     --radius: 0.375rem;
 
-    --vnpay-blue: 216 85% 34%;
-    --vnpay-dark: 220 30% 15%;
-    --vnpay-red: 350 80% 46%;
-    --vnpay-gray: 215 12% 50%;
-    --vnpay-light: 210 20% 96%;
-    --vnpay-border: 214 20% 88%;
+    /* VNPay-specific tokens */
+    --vnpay-blue: 200 100% 33%;
+    --vnpay-blue-hover: 200 100% 31%;   /* #00699e */
+    --vnpay-blue-active: 200 100% 29%;  /* #006394 */
+    --vnpay-logo-blue: 212 100% 31%;    /* #004a9c */
+    --vnpay-logo-red: 353 100% 45%;     /* #e50019 */
+    --vnpay-logo-cyan: 200 100% 42%;    /* #008ed4 */
+    --vnpay-sub: 201 44% 94%;
+    --vnpay-text-sub: 211 20% 44%;
+    --vnpay-text-light: 210 26% 80%;
+    --vnpay-success: 128 60% 40%;       /* #29a339 */
+    --vnpay-warning: 33 95% 45%;        /* #e07e06 */
   }
 
   .dark {
-    --background: 220 25% 7%;
-    --foreground: 210 40% 98%;
-    --card: 220 20% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 220 20% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 216 75% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 350 80% 50%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 220 15% 16%;
-    --muted-foreground: 215 15% 60%;
-    --accent: 216 30% 18%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 216 75% 50%;
+    --background: 213 22% 11%;
+    --foreground: 210 30% 96%;
+
+    --card: 213 20% 15%;
+    --card-foreground: 210 30% 96%;
+
+    --popover: 213 20% 15%;
+    --popover-foreground: 210 30% 96%;
+
+    --primary: 199 85% 48%;
+    --primary-foreground: 213 30% 8%;
+
+    --secondary: 199 85% 55%;
+    --secondary-foreground: 213 30% 8%;
+
+    --muted: 213 18% 20%;
+    --muted-foreground: 210 18% 65%;
+
+    --accent: 199 35% 22%;
+    --accent-foreground: 199 85% 80%;
+
+    --destructive: 0 70% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 213 16% 26%;
+    --input: 213 16% 32%;
+    --ring: 199 85% 48%;
+
+    --vnpay-blue-hover: 199 85% 52%;
+    --vnpay-blue-active: 199 85% 56%;
+    --vnpay-sub: 199 35% 22%;
+    --vnpay-text-sub: 210 18% 65%;
+    --vnpay-text-light: 210 14% 45%;
   }
 }
 
@@ -72,114 +98,319 @@
     @apply border-border;
   }
 
+  html {
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.03em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 14px;
-    line-height: 1.6;
+    /* The checkout is a fixed, single-screen surface: the document must not
+       scroll. Panels manage their own overflow via .vv-scroll. */
+    overflow: hidden;
   }
 
-  @media (min-width: 1024px) {
-    body {
-      font-size: 15px;
-    }
-  }
-
-  @media (min-width: 1440px) {
-    body {
-      background: linear-gradient(135deg, hsl(210 20% 96%) 0%, hsl(210 15% 92%) 100%);
-      min-height: 100vh;
-    }
+  #root {
+    height: 100%;
   }
 }
 
 @layer components {
-  .vnpay-header {
-    background: linear-gradient(180deg, hsl(216 85% 28%) 0%, hsl(216 85% 34%) 50%, hsl(220 70% 25%) 100%);
-  }
-
-  .vnpay-card {
+  /* The centered gateway card */
+  .vv-box {
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    border-radius: var(--radius);
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(33, 38, 44, 0.16);
   }
 
-  .vnpay-footer {
-    background: hsl(var(--muted));
-    border-top: 1px solid hsl(var(--border));
-  }
-
-  .qr-container {
+  /* One continuous sheet: all sections share a single border, radius and
+     shadow, and are separated by internal hairline rules, not by gaps. */
+  .vv-sheet {
     background: hsl(var(--card));
-    box-shadow: 0 1px 3px 0 hsl(220 20% 20% / 0.06);
+    border: 1px solid hsl(var(--border));
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(33, 38, 44, 0.16);
+    overflow: hidden;
   }
 
-  .hero-gradient {
-    background: linear-gradient(180deg, hsl(216 85% 28%) 0%, hsl(216 85% 34%) 50%, hsl(220 70% 25%) 100%);
+  @media (max-width: 767px) {
+    .vv-box,
+    .vv-sheet {
+      border-radius: 0;
+    }
   }
 
-  .btn-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(216 75% 40%));
+  /* Full-width payment method row (VNPay uses list rows, not tabs) */
+  .vv-method {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(33, 38, 44, 0.16);
+    transition: box-shadow 0.15s linear;
   }
 
-  .elevated-shadow {
-    box-shadow: 0 2px 8px -2px hsl(220 20% 20% / 0.08);
+  .vv-method:hover {
+    box-shadow: 0 4px 8px rgba(33, 38, 44, 0.16);
   }
 
-  .payment-method-row {
-    border-bottom: 1px solid hsl(var(--border));
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: background-color 0.15s ease;
+  /* Dashed divider used inside expanded method content */
+  .vv-dashed {
+    border-top: 1px dashed hsl(var(--border));
   }
 
-  .payment-method-row:hover:not(.payment-method-disabled) {
-    background: hsl(var(--accent));
-  }
-
-  .payment-method-disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-
-  .radio-active {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 5px solid hsl(var(--primary));
-    flex-shrink: 0;
-  }
-
-  .radio-inactive {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid hsl(var(--muted-foreground) / 0.35);
-    flex-shrink: 0;
-  }
-
-  .vnpay-input {
-    height: 40px;
-    border-radius: var(--radius);
+  /* Bank tile, ~17:9 like VNPay's .list-bank-item */
+  .vv-bank-tile {
     border: 1px solid hsl(var(--input));
-    background: hsl(var(--card));
-    font-size: 13px;
-    padding: 0 12px;
-    color: hsl(var(--foreground));
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 3px;
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
-  .vnpay-input:focus {
+  .vv-bank-tile:hover {
     border-color: hsl(var(--primary));
-    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.1);
-    outline: none;
   }
 
-  .vnpay-input::placeholder {
-    color: hsl(var(--muted-foreground) / 0.5);
+  .vv-bank-tile.is-active {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.35);
+  }
+
+  .dark .vv-method,
+  .dark .vv-bank-tile {
+    background: hsl(var(--card));
+  }
+}
+
+/* Unlayered so these win over Tailwind's later-emitted utilities */
+.vv-input {
+  height: 44px;
+  border-radius: 6px;
+  border: 1px solid hsl(var(--input));
+  background: #fff;
+  font-size: 14px;
+  color: hsl(var(--foreground));
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.vv-input::placeholder {
+  color: hsl(var(--muted-foreground) / 0.65);
+}
+
+.vv-input:focus,
+.vv-input:focus-visible {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.15);
+  outline: none;
+}
+
+.vv-input.is-invalid,
+.vv-input.is-invalid:focus {
+  border-color: hsl(var(--destructive));
+  box-shadow: 0 0 0 3px hsl(var(--destructive) / 0.15);
+}
+
+.dark .vv-input {
+  background: hsl(var(--card));
+}
+
+/* Compact input variant used inside the single-screen checkout panels. */
+.vv-input-sm {
+  height: 38px;
+  border-radius: 5px;
+  border: 1px solid hsl(var(--input));
+  background: #fff;
+  font-size: 13px;
+  color: hsl(var(--foreground));
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.vv-input-sm::placeholder {
+  color: hsl(var(--muted-foreground) / 0.65);
+}
+
+.vv-input-sm:focus,
+.vv-input-sm:focus-visible {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.15);
+  outline: none;
+}
+
+.dark .vv-input-sm {
+  background: hsl(var(--card));
+}
+
+.vv-input-sm.is-invalid,
+.vv-input-sm.is-invalid:focus {
+  border-color: hsl(var(--destructive));
+  box-shadow: 0 0 0 3px hsl(var(--destructive) / 0.15);
+}
+
+/* Internal scroller. The page itself never scrolls; only a panel does, and
+   only in the rare case the content genuinely cannot fit the viewport. */
+.vv-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--input)) transparent;
+}
+
+/* The QR grows into spare vertical space so tall screens don't leave the
+   code floating in dead whitespace. Clamped so it stays sane on short ones. */
+.vv-qr-frame {
+  width: min(188px, calc(100vh - 470px));
+  min-width: 148px;
+}
+
+.vv-qr {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  display: block;
+}
+
+.vv-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vv-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--input));
+  border-radius: 3px;
+}
+
+/* Primary CTA — VNPay blue, h44, radius 6 */
+.vv-btn-primary {
+  height: 44px;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transition: background-color 0.15s;
+}
+
+.vv-btn-primary:hover:not(:disabled) {
+  background: hsl(var(--vnpay-blue-hover));
+}
+
+.vv-btn-primary:active:not(:disabled) {
+  background: hsl(var(--vnpay-blue-active));
+}
+
+.vv-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Soft/secondary button: tinted background, primary text */
+.vv-btn-sub {
+  height: 44px;
+  border-radius: 6px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background: hsl(var(--accent));
+  color: hsl(var(--primary));
+  transition: background-color 0.15s;
+}
+
+.vv-btn-sub:hover:not(:disabled) {
+  background: hsl(var(--primary) / 0.15);
+}
+
+/* Ghost button — transparent until hover */
+.vv-btn-ghost {
+  height: 44px;
+  border-radius: 6px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  color: hsl(var(--foreground));
+  transition: background-color 0.15s;
+}
+
+.vv-btn-ghost:hover:not(:disabled) {
+  background: hsl(var(--muted));
+}
+
+/* Small secondary button, for tight chrome like the footer bar */
+.vv-btn-sub-sm {
+  height: 32px;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: hsl(var(--accent));
+  color: hsl(var(--primary));
+  transition: background-color 0.15s;
+}
+
+.vv-btn-sub-sm:hover:not(:disabled) {
+  background: hsl(var(--primary) / 0.15);
+}
+
+/* Small ghost button for inline actions */
+.vv-btn-ghost-sm {
+  height: 32px;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  color: hsl(var(--primary));
+  transition: background-color 0.15s;
+}
+
+.vv-btn-ghost-sm:hover:not(:disabled) {
+  background: hsl(var(--accent));
+}
+
+/* Countdown timer digits */
+.vv-timer {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* Trust / info strip */
+.vv-note {
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  background: hsl(var(--muted));
+}
+
+.vv-alert-warning {
+  border: 1px solid hsl(var(--vnpay-warning) / 0.35);
+  background: hsl(var(--vnpay-warning) / 0.08);
+  border-radius: 6px;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .vv-sheet {
+    border: none;
+    box-shadow: none;
+  }
+
+  .vv-scroll {
+    overflow: visible;
   }
 }

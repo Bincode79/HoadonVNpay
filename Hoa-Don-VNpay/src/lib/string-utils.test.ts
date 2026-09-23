@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { toUpperCaseNoAccent, formatAmount, displayAmount } from "./string-utils";
+import { toUpperCaseNoAccent, formatAmount, displayAmount, buildOrderRef, formatIssuedAt } from "./string-utils";
 
 describe("toUpperCaseNoAccent", () => {
   it("chuyển chữ thường có dấu thành chữ hoa không dấu", () => {
@@ -44,5 +44,32 @@ describe("displayAmount", () => {
 
   it("xử lý chuỗi rỗng", () => {
     expect(displayAmount("")).toBe("");
+  });
+});
+
+describe("buildOrderRef", () => {
+  it("sinh mã có tiền tố VNP và 8 chữ số", () => {
+    const ref = buildOrderRef("970422", "123456789", "500000");
+    expect(ref).toMatch(/^VNP\d{8}$/);
+  });
+
+  it("cùng thông tin luôn cho cùng mã", () => {
+    expect(buildOrderRef("970422", "123456789", "500000"))
+      .toBe(buildOrderRef("970422", "123456789", "500000"));
+  });
+
+  it("khác số tài khoản cho mã khác", () => {
+    expect(buildOrderRef("970422", "123456789", "500000"))
+      .not.toBe(buildOrderRef("970422", "987654321", "500000"));
+  });
+
+  it("xử lý số tiền rỗng", () => {
+    expect(buildOrderRef("970422", "123456789", "")).toMatch(/^VNP\d{8}$/);
+  });
+});
+
+describe("formatIssuedAt", () => {
+  it("định dạng dd/mm/yyyy HH:MM", () => {
+    expect(formatIssuedAt(new Date(2026, 0, 5, 9, 7))).toBe("05/01/2026 09:07");
   });
 });

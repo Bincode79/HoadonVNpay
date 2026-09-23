@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -22,7 +23,20 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "'SF Pro Display'", "'Helvetica Neue'", "Helvetica", "Roboto", "Arial", "sans-serif"],
+        mono: ["'IBM Plex Mono'", "ui-monospace", "monospace"],
+      },
       colors: {
+        "vnpay-blue": "hsl(var(--vnpay-blue))",
+        "vnpay-logo-blue": "hsl(var(--vnpay-logo-blue))",
+        "vnpay-logo-red": "hsl(var(--vnpay-logo-red))",
+        "vnpay-logo-cyan": "hsl(var(--vnpay-logo-cyan))",
+        "vnpay-sub": "hsl(var(--vnpay-sub))",
+        "vnpay-text-sub": "hsl(var(--vnpay-text-sub))",
+        "vnpay-text-light": "hsl(var(--vnpay-text-light))",
+        "vnpay-success": "hsl(var(--vnpay-success))",
+        "vnpay-warning": "hsl(var(--vnpay-warning))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -93,5 +107,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
