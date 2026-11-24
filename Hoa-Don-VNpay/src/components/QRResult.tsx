@@ -4,10 +4,13 @@ import {
   CreditCard,
   Download,
   Landmark,
+  Plane,
+  QrCode,
   RotateCcw,
   Shield,
   Smartphone,
-} from "lucide-react";
+  User,
+} from "lucide-react"
 import { QRCodeSVG } from "qrcode.react";
 import { BANKS } from "@/data/banks";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
@@ -28,6 +31,18 @@ interface QRResultProps {
   logoSize: number;
   qrSize: number;
   onReset: () => void;
+  onToggleInvoiceView: () => void;
+  passengerName?: string;
+  passengerId?: string;
+  passengerPhone?: string;
+  passengerEmail?: string;
+  flightNumber?: string;
+  route?: string;
+  flightDate?: string;
+  flightTime?: string;
+  seatClass?: string;
+  ticketQuantity?: string;
+  unitPrice?: string;
 }
 
 const METHOD_ICONS = {
@@ -37,6 +52,33 @@ const METHOD_ICONS = {
   "credit-vnpay": CreditCard,
   transfer: Landmark,
 } as const;
+
+function Field({
+  label,
+  value,
+  mono = false,
+  strong = false,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+  strong?: boolean;
+}) {
+  return (
+    <div className="min-w-0">
+      <p className="text-[9px] font-medium uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
+        {label}
+      </p>
+      <p
+        className={`mt-0.5 truncate text-xs text-[#1F2937] dark:text-gray-100 ${
+          mono ? "font-mono tabular-nums" : "font-normal"
+        } ${strong ? "text-sm font-bold text-[#002855] dark:text-blue-300" : ""}`}
+      >
+        {value}
+      </p>
+    </div>
+  );
+}
 
 function DetailRow({
   label,
@@ -77,7 +119,25 @@ export function QRResult({
   isLoading,
   qrSize,
   onReset,
+  onToggleInvoiceView,
+  passengerName = "",
+  passengerId = "",
+  passengerPhone = "",
+  passengerEmail = "",
+  flightNumber = "",
+  route = "",
+  flightDate = "",
+  flightTime = "",
+  seatClass = "Economy",
+  ticketQuantity = "1",
+  unitPrice = "",
 }: QRResultProps) {
+  const formatInvoiceDate = (dateStr: string) => {
+    if (!dateStr) return "—";
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) return dateStr;
+    return date.toLocaleDateString("vi-VN", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" });
+  };
   const [selectedMethod, setSelectedMethod] = useState("transfer");
   const selectedBank = BANKS.find((b) => b.code === bankCode);
   const selectedPaymentMethod =
@@ -266,6 +326,62 @@ export function QRResult({
             </div>
           )}
 
+          {(passengerName || passengerId || passengerPhone || passengerEmail || flightNumber || route || flightDate || flightTime || seatClass || ticketQuantity || unitPrice) && (
+            <div className="border-t border-[#E3EAF2] bg-white p-3 sm:p-4 dark:border-gray-700 dark:bg-gray-800">
+              <div className="mb-3 flex items-center gap-2">
+                <User className="h-4 w-4 text-[#002855] dark:text-blue-300" />
+                <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#002855] dark:text-blue-300">
+                  Thông tin hành khách & chuyến bay
+                </h2>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-3">
+                {passengerName && (
+                  <Field label="Họ tên" value={passengerName} />
+                )}
+                {passengerId && (
+                  <Field label="CMND/CCCD" value={passengerId} mono />
+                )}
+                {passengerPhone && (
+                  <Field label="Điện thoại" value={passengerPhone} />
+                )}
+                {passengerEmail && (
+                  <Field label="Email" value={passengerEmail} />
+                )}
+                {flightNumber && (
+                  <Field label="Chuyến bay" value={flightNumber} strong />
+                )}
+                {route && (
+                  <Field label="Tuyến bay" value={route} />
+                )}
+                {flightDate && (
+                  <Field label="Ngày bay" value={formatInvoiceDate(flightDate)} />
+                )}
+                {flightTime && (
+                  <Field label="Giờ bay" value={flightTime} />
+                )}
+                {seatClass && (
+                  <Field label="Hạng" value={seatClass} />
+                )}
+                {ticketQuantity && (
+                  <Field label="Số lượng vé" value={`${ticketQuantity} vé`} strong />
+                )}
+                {unitPrice && (
+                  <Field label="Đơn giá" value={`${unitPrice} VNĐ`} />
+                )}
+                {amount && (
+                  <Field label="Tổng tiền" value={`${amount} VNĐ`} strong />
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={onToggleInvoiceView}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-[#CBD7E4] bg-[#F7F9FC] px-3 py-1.5 text-xs font-medium text-[#002855] transition-colors hover:bg-[#EEF3F8] dark:border-gray-600 dark:bg-gray-800 dark:text-blue-300 dark:hover:bg-gray-700"
+              >
+                <RotateCcw className="h-3 w-3" /> Xem mẫu hóa đơn hàng không
+              </button>
+            </div>
+          )}
+
           <div className="flex flex-col gap-3 border-t border-[#E3EAF2] bg-[#F7F9FC] px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-[#64748B] dark:text-gray-400">
               <span className="flex items-center gap-1.5">
@@ -281,7 +397,7 @@ export function QRResult({
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#002855] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#004B87] dark:bg-blue-700 dark:hover:bg-blue-600"
+                className="no-print inline-flex items-center gap-1.5 rounded-md bg-[#002855] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#004B87] dark:bg-blue-700 dark:hover:bg-blue-600"
               >
                 <Download className="h-3.5 w-3.5" />
                 In / Lưu PDF
@@ -289,7 +405,7 @@ export function QRResult({
               <button
                 type="button"
                 onClick={onReset}
-                className="inline-flex items-center gap-1.5 rounded-md border border-[#C9D4E0] bg-white px-3 py-2 text-xs font-semibold text-[#334155] transition-colors hover:bg-[#EEF3F8] dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                className="no-print inline-flex items-center gap-1.5 rounded-md border border-[#C9D4E0] bg-white px-3 py-2 text-xs font-semibold text-[#334155] transition-colors hover:bg-[#EEF3F8] dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Tạo mới

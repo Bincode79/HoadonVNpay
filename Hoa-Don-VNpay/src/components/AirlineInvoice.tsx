@@ -332,7 +332,7 @@ export function AirlineInvoice({
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#002855] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#004B87] dark:bg-blue-700 dark:hover:bg-blue-600"
+                className="no-print inline-flex items-center gap-1.5 rounded-md bg-[#002855] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#004B87] dark:bg-blue-700 dark:hover:bg-blue-600"
               >
                 <Download className="h-3.5 w-3.5" />
                 In / Lưu PDF
@@ -340,7 +340,7 @@ export function AirlineInvoice({
               <button
                 type="button"
                 onClick={onReset}
-                className="inline-flex items-center gap-1.5 rounded-md border border-[#C9D4E0] bg-white px-3 py-2 text-xs font-semibold text-[#334155] transition-colors hover:bg-[#EEF3F8] dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                className="no-print inline-flex items-center gap-1.5 rounded-md border border-[#C9D4E0] bg-white px-3 py-2 text-xs font-semibold text-[#334155] transition-colors hover:bg-[#EEF3F8] dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Tạo mới

@@ -149,6 +149,18 @@ export default function QRGenerator() {
         logoSize={logoSize}
         qrSize={qrSize}
         onReset={handleReset}
+        onToggleInvoiceView={() => setShowAirlineInvoice(true)}
+        passengerName={passengerName}
+        passengerId={passengerId}
+        passengerPhone={passengerPhone}
+        passengerEmail={passengerEmail}
+        flightNumber={flightNumber}
+        route={route}
+        flightDate={flightDate}
+        flightTime={flightTime}
+        seatClass={seatClass}
+        ticketQuantity={ticketQuantity}
+        unitPrice={unitPrice}
       />
     );
   }
