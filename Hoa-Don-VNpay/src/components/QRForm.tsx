@@ -203,13 +203,66 @@ export function QRForm({
                         </div>
                       </div>
 
-                      {(passengerName || passengerId || passengerPhone) && (
-                        <div className="space-y-2 pt-2 border-t border-[#E5E7EB] dark:border-gray-700 mt-2">
-                          {passengerName && <p className="text-xs text-[#5A6A7A] dark:text-gray-400">Hành khách: <span className="font-semibold text-[#2D3A4A] dark:text-gray-200">{passengerName}</span> {passengerId ? `(${passengerId})` : ""}</p>}
-                          {passengerPhone && <p className="text-xs text-[#5A6A7A] dark:text-gray-400">Liên hệ: <span className="font-semibold text-[#2D3A4A] dark:text-gray-200">{passengerPhone}</span></p>}
-                          {bookingCode && <p className="text-xs text-[#5A6A7A] dark:text-gray-400">Mã đặt vé: <span className="font-mono font-semibold text-[#2D3A4A] dark:text-gray-200">{bookingCode}</span></p>}
-                        </div>
-                      )}
+                    <div className="space-y-2 mt-4 pt-3 border-t border-[#E5E7EB] dark:border-gray-700">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Mã đặt vé / Booking Code</Label>
+                        <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
+                      </div>
+                      <Input
+                        value={bookingCode}
+                        onChange={(e) => setBookingCode(e.target.value.toUpperCase())}
+                        placeholder="VD: ABC123"
+                        className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 font-mono"
+                        maxLength={8} />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Họ tên hành khách</Label>
+                        <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
+                      </div>
+                      <Input
+                        value={passengerName}
+                        onChange={(e) => setPassengerName(e.target.value.toUpperCase())}
+                        placeholder="VD: NGUYEN VAN A"
+                        className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 uppercase" />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">CMND / CCCD / Hộ chiếu</Label>
+                        <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
+                      </div>
+                      <Input
+                        value={passengerId}
+                        onChange={(e) => setPassengerId(e.target.value)}
+                        placeholder="VD: 0123456789"
+                        className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 font-mono" />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Số điện thoại liên hệ</Label>
+                        <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
+                      </div>
+                      <Input
+                        value={passengerPhone}
+                        onChange={(e) => setPassengerPhone(e.target.value)}
+                        placeholder="VD: 0901234567"
+                        className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200" />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Email</Label>
+                        <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
+                      </div>
+                      <Input
+                        value={passengerEmail}
+                        onChange={(e) => setPassengerEmail(e.target.value)}
+                        placeholder="VD: passenger@example.com"
+                        className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200" />
+                    </div>
                       <Button
                         onClick={onGenerate}
                         disabled={!canGenerate}
