@@ -78,7 +78,7 @@ function Field({
 }) {
   return (
     <div className="min-w-0">
-      <p className="text-[9px] font-medium uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
+      <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#111827] dark:text-gray-100">
         {label}
       </p>
       <p
@@ -155,7 +155,7 @@ export function AirlineInvoice({
       <div className="w-full max-w-3xl">
         <div
           aria-busy={isLoading}
-          className="overflow-hidden rounded-lg border border-[#C9D4E0] bg-white shadow-[0_18px_40px_-28px_rgba(15,35,65,0.5)] dark:border-gray-700 dark:bg-gray-900"
+          className="invoice-print-area overflow-hidden rounded-lg border border-[#C9D4E0] bg-white shadow-[0_18px_40px_-28px_rgba(15,35,65,0.5)] dark:border-gray-700 dark:bg-gray-900"
         >
           <div className="relative overflow-hidden bg-gradient-to-r from-[#002855] via-[#004B87] to-[#002855] px-4 py-3 text-white sm:px-6">
             <div className="relative flex flex-col items-center gap-2">

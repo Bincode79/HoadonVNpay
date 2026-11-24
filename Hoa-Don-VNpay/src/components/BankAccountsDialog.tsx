@@ -36,7 +36,7 @@ export function BankAccountsDialog({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-[11px] font-medium text-[#002855] underline decoration-[#002855]/30 underline-offset-2 hover:text-[#004B87] dark:text-blue-300 dark:decoration-blue-400/40"
+        className="no-print text-[11px] font-medium text-[#002855] underline decoration-[#002855]/30 underline-offset-2 hover:text-[#004B87] dark:text-blue-300 dark:decoration-blue-400/40"
       >
         Xem tài khoản ngân hàng khác
       </button>

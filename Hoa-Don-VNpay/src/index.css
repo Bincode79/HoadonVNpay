@@ -231,6 +231,39 @@
     background: white !important;
   }
 
+  /* Compact layout to fit one A4 page */
+  .invoice-print-area {
+    max-width: 100% !important;
+  }
+
+  .invoice-print-area,
+  .invoice-print-area * {
+    break-inside: avoid !important;
+  }
+
+  .invoice-print-area .rounded-lg {
+    box-shadow: none !important;
+  }
+
+  .invoice-print-area [class*="p-"],
+  .invoice-print-area [class*="px-"],
+  .invoice-print-area [class*="py-"] {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .invoice-print-area [class*="gap-"] {
+    gap: 4px !important;
+  }
+
+  .invoice-print-area [class*="mt-"],
+  .invoice-print-area [class*="mb-"] {
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+  }
+
   /* Force light palette for dark-mode utility classes */
   .dark {
     color-scheme: light !important;

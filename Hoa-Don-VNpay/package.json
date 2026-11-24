@@ -4,7 +4,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Tạo hóa đơn thanh toán VNPAY - Mã QR chuyển khoản",
-  "author": "Your Name",
+  "author": "VNPAY",
   "main": "electron/main.cjs",
   "type": "module",
   "scripts": {

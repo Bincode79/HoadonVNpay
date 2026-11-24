@@ -1,73 +1,67 @@
-# Welcome to your Lovable project
+# Tạo hóa đơn thanh toán VNPAY
 
-## Project info
+Ứng dụng tạo mã QR thanh toán VietQR / Napas (VNPAY) và hóa đơn thanh toán trực tuyến cho các dịch vụ hàng không.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Tính năng
 
-## How can I edit this code?
+- Tạo mã QR chuyển khoản ngân hàng theo chuẩn VietQR / Napas.
+- Sinh hóa đơn thanh toán trực tuyến với thông tin hành khách, chuyến bay, vé.
+- Hỗ trợ nhiều ngân hàng nội địa.
+- In / lưu hóa đơn ra PDF (giao diện in A4 gọn 1 trang).
+- Chạy được trên web (Vite dev server) và desktop (Electron).
 
-There are several ways of editing your application.
+## Công nghệ
 
-**Use Lovable**
+- React + TypeScript + Vite
+- Tailwind CSS
+- Electron (đóng gói desktop)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Phát triển
 
-Changes made via Lovable will be committed automatically to this repo.
+```bash
+# Cài dependencies
+npm install
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Chạy dev server (mặc định cổng 8080)
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Mở trình duyệt tại `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Tham số URL
 
-**Use GitHub Codespaces**
+- `?invoice=1` hoặc `?view=invoice`: mở thẳng màn hình hóa đơn.
+- `?bank=<mã ngân hàng>`: mã ngân hàng (ví dụ `VCB`).
+- `?acc=<số tài khoản>`: số tài khoản nhận.
+- `?name=<tên tài khoản>`: tên chủ tài khoản.
+- `?amount=<số tiền>`: số tiền (VNĐ).
+- `?msg=<nội dung>`: nội dung chuyển khoản.
+- `?flight=<số hiệu>`: số hiệu chuyến bay.
+- `?route=<tuyến>`: tuyến bay (ví dụ `SGN-HAN`).
+- `?date=<YYYY-MM-DD>`: ngày bay.
+- `?time=<HH:mm>`: giờ bay.
+- `?seat=<hạng vé>`: hạng vé (mặc định `Economy`).
+- `?qty=<số lượng>`: số lượng vé.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Build
 
-## What technologies are used for this project?
+```bash
+# Build web
+npm run build
 
-This project is built with:
+# Build bản Electron portable (Windows x64)
+npm run electron:build:portable
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Xem `HUONG-DAN-PHAT-HANH.md` để biết cách đóng gói và phát hành.
 
-## How can I deploy this project?
+## Cấu trúc
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
+src/
+  components/      # Các component giao diện (QRGenerator, QRResult, AirlineInvoice, ...)
+  data/            # Dữ liệu ngân hàng
+  lib/             # Hàm tiện ích
+  assets/          # Logo, ảnh
+  pages/           # Trang
+```
