@@ -105,7 +105,7 @@ export function QRForm({
                   <div className="px-3 sm:px-4 py-1.5 sm:py-2 space-y-1.5">
                     <div className="space-y-2">
                     <div className="space-y-1">
-                      <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Ngân hàng thụ hưởng</Label>
+                      <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Ngân hàng thụ hưởng</Label>
                       <Select value={bankCode} onValueChange={setBankCode}>
                         <SelectTrigger className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200">
                             <SelectValue placeholder="— Chọn ngân hàng —">
@@ -130,7 +130,7 @@ export function QRForm({
                         </Select>
                       </div>
                     <div className="space-y-1">
-                      <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Số tài khoản</Label>
+                      <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Số tài khoản</Label>
                         <Input
                           value={accountNumber}
                           onChange={(e) => {
@@ -142,7 +142,7 @@ export function QRForm({
                           maxLength={MAX_ACCOUNT_LENGTH} />
                       </div>
                     <div className="space-y-1">
-                      <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Tên chủ tài khoản</Label>
+                      <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Tên chủ tài khoản</Label>
                         <Input
                           value={accountName}
                           onChange={(e) => setAccountName(toUpperCaseNoAccent(e.target.value))}
@@ -150,7 +150,7 @@ export function QRForm({
                           className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 uppercase" />
                       </div>
                     <div className="space-y-1">
-                      <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Số tiền (VNĐ) <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
+                      <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Số tiền (VNĐ) <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
                         <div className="relative">
                           <Input
                             value={amount}
@@ -165,7 +165,7 @@ export function QRForm({
                         </div>
                       </div>
                     <div className="space-y-1">
-                      <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Nội dung chuyển khoản <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
+                      <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Nội dung chuyển khoản <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
                         <Input
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
@@ -175,7 +175,7 @@ export function QRForm({
                       </div>
 
                       <div className="space-y-1">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Số lượng vé / Passenger Quantity</Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Số lượng vé / Passenger Quantity</Label>
                         <Input
                           type="number"
                           min="1"
@@ -188,7 +188,7 @@ export function QRForm({
                       </div>
 
                       <div className="space-y-1">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Đơn giá / Unit Price (VNĐ) <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Đơn giá / Unit Price (VNĐ) <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
                         <div className="relative">
                           <Input
                             value={unitPrice}
@@ -205,7 +205,7 @@ export function QRForm({
 
                     <div className="space-y-2 mt-4 pt-3 border-t border-[#E5E7EB] dark:border-gray-700">
                       <div className="flex items-center justify-between gap-2">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Mã đặt vé / Booking Code</Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Mã đặt vé / Booking Code</Label>
                         <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
                       </div>
                       <Input
@@ -218,7 +218,7 @@ export function QRForm({
 
                     <div className="space-y-1">
                       <div className="flex items-center justify-between gap-2">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Họ tên hành khách</Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Họ tên hành khách</Label>
                         <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
                       </div>
                       <Input
@@ -230,7 +230,7 @@ export function QRForm({
 
                     <div className="space-y-1">
                       <div className="flex items-center justify-between gap-2">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">CMND / CCCD / Hộ chiếu</Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">CMND / CCCD / Hộ chiếu</Label>
                         <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
                       </div>
                       <Input
@@ -242,7 +242,7 @@ export function QRForm({
 
                     <div className="space-y-1">
                       <div className="flex items-center justify-between gap-2">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Số điện thoại liên hệ</Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Số điện thoại liên hệ</Label>
                         <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
                       </div>
                       <Input
@@ -254,7 +254,7 @@ export function QRForm({
 
                     <div className="space-y-1">
                       <div className="flex items-center justify-between gap-2">
-                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Email</Label>
+                        <Label className="text-xs font-medium text-[#2D3A4A] dark:text-gray-100">Email</Label>
                         <span className="text-[10px] text-[#5A6A7A] dark:text-gray-400">không bắt buộc</span>
                       </div>
                       <Input

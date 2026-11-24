@@ -51,12 +51,12 @@ function DetailRow({
 }) {
   return (
     <div className="grid grid-cols-[92px_minmax(0,1fr)] items-center gap-3 px-3 py-2.5">
-      <dt className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
+      <dt className="text-[10px] font-medium uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
         {label}
       </dt>
       <dd
         className={`truncate text-xs text-[#1F2937] dark:text-gray-100 ${
-          mono ? "font-mono tabular-nums" : "font-medium"
+          mono ? "font-mono tabular-nums" : "font-normal"
         } ${strong ? "text-sm font-bold text-[#002855] dark:text-blue-300" : ""}`}
       >
         {value}
@@ -98,7 +98,7 @@ export function QRResult({
                   <h1 className="text-base font-bold uppercase tracking-[0.08em] text-white sm:text-lg">
                     Cổng thanh toán trực tuyến
                   </h1>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#FFD700] sm:text-xs">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFD700] sm:text-xs">
                     Trung tâm Hàng không Việt Nam
                   </p>
                 </div>
@@ -115,7 +115,7 @@ export function QRResult({
           <div className="border-b border-[#E3EAF2] px-3 py-3 sm:px-5">
             <div className="mb-3 flex items-end justify-between gap-3">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#64748B] dark:text-gray-400">
+                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#64748B] dark:text-gray-400">
                   Phương thức thanh toán
                 </p>
                 <h2 className="mt-0.5 text-sm font-bold text-[#111827] dark:text-gray-100">
@@ -194,10 +194,10 @@ export function QRResult({
                       />
                     )}
                     <div className="min-w-0">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B] dark:text-gray-400">
+                      <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-[#64748B] dark:text-gray-400">
                         Ngân hàng thụ hưởng
                       </p>
-                      <p className="truncate text-sm font-semibold text-[#111827] dark:text-gray-100">
+                      <p className="truncate text-sm font-medium text-[#111827] dark:text-gray-100">
                         {selectedBank?.fullName || "—"}
                       </p>
                     </div>
@@ -236,7 +236,7 @@ export function QRResult({
                       />
                     </div>
                   </div>
-                  <p className="mt-2 text-center text-[11px] font-semibold text-[#111827] dark:text-gray-200">
+                  <p className="mt-2 text-center text-[11px] font-normal text-[#111827] dark:text-gray-200">
                     Quét mã QR để thanh toán
                   </p>
                   <p className="text-center text-[10px] leading-relaxed text-[#64748B] dark:text-gray-400">

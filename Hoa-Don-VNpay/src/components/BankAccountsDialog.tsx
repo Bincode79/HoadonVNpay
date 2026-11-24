@@ -36,7 +36,7 @@ export function BankAccountsDialog({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-[11px] font-semibold text-[#002855] underline decoration-[#002855]/30 underline-offset-2 hover:text-[#004B87] dark:text-blue-300 dark:decoration-blue-400/40"
+        className="text-[11px] font-medium text-[#002855] underline decoration-[#002855]/30 underline-offset-2 hover:text-[#004B87] dark:text-blue-300 dark:decoration-blue-400/40"
       >
         Xem tài khoản ngân hàng khác
       </button>
@@ -73,7 +73,7 @@ export function BankAccountsDialog({
                       {bank?.logo && (
                         <img src={bank.logo} alt="" className="h-5 w-5 rounded-sm object-contain" />
                       )}
-                      <span className="truncate text-xs font-semibold text-[#111827] dark:text-gray-100">
+                      <span className="truncate text-xs font-medium text-[#111827] dark:text-gray-100">
                         {bank?.name || acc.bankCode}
                       </span>
                       {acc.isCurrent && (

@@ -78,12 +78,12 @@ function Field({
 }) {
   return (
     <div className="min-w-0">
-      <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
+      <p className="text-[9px] font-medium uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
         {label}
       </p>
       <p
         className={`mt-0.5 truncate text-xs text-[#1F2937] dark:text-gray-100 ${
-          mono ? "font-mono tabular-nums" : "font-medium"
+          mono ? "font-mono tabular-nums" : "font-normal"
         } ${strong ? "text-sm font-bold text-[#002855] dark:text-blue-300" : ""}`}
       >
         {value}
@@ -95,12 +95,12 @@ function Field({
 function DetailRow({ label, value, mono = false, strong = false }: { label: string; value: string; mono?: boolean; strong?: boolean }) {
   return (
     <div className="grid grid-cols-[92px_minmax(0,1fr)] items-center gap-3 px-3 py-2">
-      <dt className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
+      <dt className="text-[10px] font-medium uppercase tracking-[0.08em] text-[#64748B] dark:text-gray-400">
         {label}
       </dt>
       <dd
         className={`truncate text-xs text-[#1F2937] dark:text-gray-100 ${
-          mono ? "font-mono tabular-nums" : "font-medium"
+          mono ? "font-mono tabular-nums" : "font-normal"
         } ${strong ? "text-sm font-bold text-[#002855] dark:text-blue-300" : ""}`}
       >
         {value}
@@ -164,7 +164,7 @@ export function AirlineInvoice({
                   <h1 className="text-base font-bold uppercase tracking-[0.08em] sm:text-lg">
                     Cổng thanh toán trực tuyến
                   </h1>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#FFD700] sm:text-xs">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFD700] sm:text-xs">
                     Trung tâm Hàng không Việt Nam
                   </p>
                   <p className="mt-0.5 text-[10px] uppercase tracking-[0.12em] text-white/70">
@@ -208,7 +208,7 @@ export function AirlineInvoice({
                   <Field label="Giờ bay" value={flightTime || "—"} />
                 </div>
                 {seatClass && (
-                  <p className="mt-2.5 inline-flex items-center gap-1.5 rounded-sm border border-[#CBD7E4] bg-[#F7F9FC] px-2 py-1 text-[11px] font-semibold text-[#002855] dark:border-gray-600 dark:bg-gray-800 dark:text-blue-300">
+                  <p className="mt-2.5 inline-flex items-center gap-1.5 rounded-sm border border-[#CBD7E4] bg-[#F7F9FC] px-2 py-1 text-[11px] font-medium text-[#002855] dark:border-gray-600 dark:bg-gray-800 dark:text-blue-300">
                     <Shield className="h-3.5 w-3.5" />
                     Hạng: {seatClass}
                   </p>
@@ -244,7 +244,7 @@ export function AirlineInvoice({
                     />
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B] dark:text-gray-400">
+                    <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-[#64748B] dark:text-gray-400">
                       Phương thức thanh toán
                     </p>
                     <p className="truncate text-sm font-bold text-[#111827] dark:text-gray-100">
@@ -292,13 +292,13 @@ export function AirlineInvoice({
                     />
                   </div>
                 </div>
-                <p className="mt-2 text-center text-[11px] font-semibold text-[#111827] dark:text-gray-200">
+                <p className="mt-2 text-center text-[11px] font-normal text-[#111827] dark:text-gray-200">
                   Quét mã QR để thanh toán
                 </p>
                 <p className="text-center text-[10px] leading-relaxed text-[#64748B] dark:text-gray-400">
                   Dùng ứng dụng ngân hàng hoặc VNPAY/VietQR
                 </p>
-                <p className="mt-1 text-center font-mono text-[10px] font-semibold tracking-[0.12em] text-[#002855] dark:text-blue-300">
+                <p className="mt-1 text-center font-mono text-[10px] font-medium tracking-[0.12em] text-[#002855] dark:text-blue-300">
                   {displayBookingCode}
                 </p>
               </div>
