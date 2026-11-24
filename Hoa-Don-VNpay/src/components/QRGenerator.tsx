@@ -33,7 +33,9 @@ export default function QRGenerator() {
   const [useLocalQR, setUseLocalQR] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [qrData, setQrData] = useState<string>("");
-  const [showAirlineInvoice, setShowAirlineInvoice] = useState(false);
+  const [showAirlineInvoice, setShowAirlineInvoice] = useState(
+    () => searchParams.get("invoice") === "1" || searchParams.get("view") === "invoice",
+  );
 
   const qrValue = useMemo(() => {
     if (!bankCode || !accountNumber) return "";
