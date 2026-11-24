@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { QrCode, Loader2 } from "lucide-react";
+import { QrCode, Loader2, FileText, Plane } from "lucide-react";
 import { BANKS } from "@/data/banks";
 import { toUpperCaseNoAccent, formatAmount, displayAmount } from "@/lib/string-utils";
 import vnpayLogo from "@/assets/vnpay-logo-hd.png";
@@ -26,11 +26,36 @@ interface QRFormProps {
   setAmount: (v: string) => void;
   message: string;
   setMessage: (v: string) => void;
+  bookingCode: string;
+  setBookingCode: (v: string) => void;
+  passengerName: string;
+  setPassengerName: (v: string) => void;
+  passengerId: string;
+  setPassengerId: (v: string) => void;
+  passengerPhone: string;
+  setPassengerPhone: (v: string) => void;
+  passengerEmail: string;
+  setPassengerEmail: (v: string) => void;
+  flightNumber: string;
+  setFlightNumber: (v: string) => void;
+  route: string;
+  setRoute: (v: string) => void;
+  flightDate: string;
+  setFlightDate: (v: string) => void;
+  flightTime: string;
+  setFlightTime: (v: string) => void;
+  seatClass: string;
+  setSeatClass: (v: string) => void;
+  ticketQuantity: string;
+  setTicketQuantity: (v: string) => void;
+  unitPrice: string;
+  setUnitPrice: (v: string) => void;
   logoSize: number;
   setLogoSize: (v: number) => void;
   isLoading: boolean;
   onGenerate: () => void;
   qrValue: string;
+  onToggleInvoiceView?: () => void;
 }
 
 export function QRForm({
@@ -39,9 +64,22 @@ export function QRForm({
   accountName, setAccountName,
   amount, setAmount,
   message, setMessage,
+  bookingCode, setBookingCode,
+  passengerName, setPassengerName,
+  passengerId, setPassengerId,
+  passengerPhone, setPassengerPhone,
+  passengerEmail, setPassengerEmail,
+  flightNumber, setFlightNumber,
+  route, setRoute,
+  flightDate, setFlightDate,
+  flightTime, setFlightTime,
+  seatClass, setSeatClass,
+  ticketQuantity, setTicketQuantity,
+  unitPrice, setUnitPrice,
   logoSize, setLogoSize,
   isLoading, onGenerate,
   qrValue,
+  onToggleInvoiceView,
 }: QRFormProps) {
   const selectedBank = useMemo(() => BANKS.find((b) => b.code === bankCode), [bankCode]);
 
@@ -56,7 +94,7 @@ export function QRForm({
         <div className="bg-white dark:bg-gray-800 rounded-[28px] border border-[#DCE6F2] dark:border-gray-700 overflow-hidden shadow-[0_22px_50px_-28px_rgba(15,35,65,0.35)]">
           <div className="bg-white dark:bg-gray-800 pt-3 pb-2 px-4 text-center">
             <div className="flex flex-col items-center justify-center gap-0.5">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-wide text-[#005BAC] dark:text-blue-300">CỔNG THANH TOÁN TRỰC TUYẾN</h1>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-wide text-[#005BAC] dark:text-blue-300">CỔNG THANH TOÁN TRỰC TUYẾN HÀNG KHÔNG VIỆT NAM - TRUNG TÂM HÀNG KHÔNG VIỆT NAM</h1>
               <img src={bannerLogo} alt="VNPAY × VietQR" className="object-contain" style={{ width: "100%", maxWidth: 400, height: 90 }} />
             </div>
           </div>
@@ -135,6 +173,43 @@ export function QRForm({
                           className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200"
                           maxLength={50} />
                       </div>
+
+                      <div className="space-y-1">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Số lượng vé / Passenger Quantity</Label>
+                        <Input
+                          type="number"
+                          min="1"
+                          max="999"
+                          value={ticketQuantity}
+                          onChange={(e) => setTicketQuantity(e.target.value)}
+                          placeholder="VD: 1"
+                          className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <Label className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">Đơn giá / Unit Price (VNĐ) <span className="italic text-[#7A8A9A] dark:text-gray-400">— không bắt buộc</span></Label>
+                        <div className="relative">
+                          <Input
+                            value={unitPrice}
+                            onChange={(e) => setUnitPrice(formatAmount(e.target.value))}
+                            placeholder="VD: 1,500,000"
+                            className="h-[38px] rounded-md text-[12px] border-[#D1D9E6] dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 pr-20" />
+                          {unitPrice && (
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#5A6A7A] dark:text-gray-400 font-medium">
+                              {displayAmount(unitPrice)} ₫
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {(passengerName || passengerId || passengerPhone) && (
+                        <div className="space-y-2 pt-2 border-t border-[#E5E7EB] dark:border-gray-700 mt-2">
+                          {passengerName && <p className="text-xs text-[#5A6A7A] dark:text-gray-400">Hành khách: <span className="font-semibold text-[#2D3A4A] dark:text-gray-200">{passengerName}</span> {passengerId ? `(${passengerId})` : ""}</p>}
+                          {passengerPhone && <p className="text-xs text-[#5A6A7A] dark:text-gray-400">Liên hệ: <span className="font-semibold text-[#2D3A4A] dark:text-gray-200">{passengerPhone}</span></p>}
+                          {bookingCode && <p className="text-xs text-[#5A6A7A] dark:text-gray-400">Mã đặt vé: <span className="font-mono font-semibold text-[#2D3A4A] dark:text-gray-200">{bookingCode}</span></p>}
+                        </div>
+                      )}
                       <Button
                         onClick={onGenerate}
                         disabled={!canGenerate}
@@ -149,6 +224,18 @@ export function QRForm({
                           </>
                         )}
                       </Button>
+                      
+                      {onToggleInvoiceView && (
+                        <Button
+                          type="button"
+                          onClick={onToggleInvoiceView}
+                          variant="outline"
+                          className="w-full h-[38px] rounded-md text-[13px] font-medium text-[#003366] dark:text-[#FFD700] border-[#003366]/30 dark:border-yellow-600/30 hover:bg-[#003366]/5 dark:hover:bg-yellow-600/5 transition-colors mt-2">
+                          <FileText className="w-4 h-4 mr-1.5" />
+                          Xem mẫu hóa đơn hàng không
+                          <Plane className="w-4 h-4 ml-1.5" />
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>

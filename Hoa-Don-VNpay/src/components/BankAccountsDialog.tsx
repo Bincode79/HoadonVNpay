@@ -34,7 +34,10 @@ export function BankAccountsDialog({
 
   const allAccounts = [
     { bankCode: currentBankCode, accountNumber: currentAccountNumber, accountName: currentAccountName, isCurrent: true },
-    ...SAMPLE_ACCOUNTS.filter((a) => a.accountNumber !== currentAccountNumber).slice(0, 9),
+    ...SAMPLE_ACCOUNTS
+      .filter((a) => a.accountNumber !== currentAccountNumber)
+      .slice(0, 9)
+      .map((a) => ({ ...a, isCurrent: false })),
   ];
 
   return (

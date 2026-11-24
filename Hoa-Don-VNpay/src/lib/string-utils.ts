@@ -41,3 +41,10 @@ export const displayAmount = (value: string): string => {
   if (!value) return "";
   return Number(value).toLocaleString("vi-VN");
 };
+
+export const generateBookingCode = (): string => {
+  const prefix = "CAAV";
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `${prefix}${timestamp}${random}`;
+};

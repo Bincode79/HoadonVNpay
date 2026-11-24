@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Check } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { BANKS } from "@/data/banks";
@@ -38,6 +39,7 @@ export function QRResult({
   onCopy,
   onReset,
 }: QRResultProps) {
+  const [selectedMethod, setSelectedMethod] = useState("transfer");
   const selectedBank = BANKS.find((b) => b.code === bankCode);
 
   return (
@@ -54,19 +56,19 @@ export function QRResult({
             {PAYMENT_METHODS.map((method) => (
               <div
                 key={method.id}
-                className={`mb-1.5 sm:mb-2 border border-gray-300 bg-white dark:bg-gray-800`}
-              >
+                onClick={() => setSelectedMethod(method.id)}
+                className={`mb-1.5 sm:mb-2 border ${selectedMethod === method.id ? "border-[#005BAC] dark:border-blue-500" : "border-gray-300 dark:border-gray-600"} bg-white dark:bg-gray-800 cursor-pointer`}>
                 <div className="p-1.5 sm:p-2">
                   <div className="flex items-center gap-2">
-                    <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${method.id === "transfer" ? "bg-[#005BAC] dark:bg-blue-600" : "bg-white dark:bg-gray-700 border-2 border-[#D1D9E6] dark:border-gray-500"}`}>
-                      {method.id === "transfer" && <Check className="w-3 h-3 text-white" />}
+                    <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${selectedMethod === method.id ? "bg-[#005BAC] dark:bg-blue-600" : "bg-white dark:bg-gray-700 border-2 border-[#D1D9E6] dark:border-gray-500"}`}>
+                      {selectedMethod === method.id && <Check className="w-3 h-3 text-white" />}
                     </div>
                     <span className="text-sm font-semibold text-[#2D3A4A] dark:text-gray-100">{method.label}</span>
                     <span className="text-xs italic text-[#5A6A7A] dark:text-gray-400">({method.note})</span>
                   </div>
                 </div>
 
-                {method.id === "transfer" && (
+                {selectedMethod === method.id && (
                   <div className="border-t border-[#E5E7EB] dark:border-gray-700">
                     <p className="text-xs leading-relaxed text-[#5A6A7A] dark:text-gray-400 px-2 pt-1.5 italic">
                       Sau khi nhận được thông tin đặt dịch vụ, nhân viên chăm sóc khách hàng của chúng tôi sẽ liên hệ với Quý khách để xác nhận và hướng dẫn thêm về thủ tục thanh toán.
