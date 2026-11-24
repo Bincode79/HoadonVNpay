@@ -13,7 +13,6 @@ import { BANKS } from "@/data/banks";
 import { PAYMENT_METHODS } from "@/data/payment-methods";
 import { displayAmount } from "@/lib/string-utils";
 import { BankAccountsDialog } from "@/components/BankAccountsDialog";
-import caavLogo from "@/assets/caav-logo.svg";
 import bannerLogo from "@/assets/vnpay-vietqr-banner.png";
 
 interface QRResultProps {
@@ -95,9 +94,6 @@ export function QRResult({
           <div className="relative overflow-hidden bg-gradient-to-r from-[#002855] via-[#004B87] to-[#002855] px-4 py-3 text-center sm:px-6">
             <div className="relative flex flex-col items-center gap-2">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-white/10">
-                  <img src={caavLogo} alt="CAAV" className="h-7 w-7 object-contain" />
-                </div>
                 <div className="text-left">
                   <h1 className="text-base font-bold uppercase tracking-[0.08em] text-white sm:text-lg">
                     Cổng thanh toán trực tuyến
@@ -131,7 +127,7 @@ export function QRResult({
               </span>
             </div>
 
-            <div role="radiogroup" aria-label="Phương thức thanh toán" className="grid gap-2 sm:grid-cols-2">
+            <div role="radiogroup" aria-label="Phương thức thanh toán" className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
               {PAYMENT_METHODS.map((method) => {
                 const isSelected = selectedMethod === method.id;
                 const Icon = METHOD_ICONS[method.id as keyof typeof METHOD_ICONS] ?? CreditCard;
@@ -163,7 +159,7 @@ export function QRResult({
                       <Icon className="h-4 w-4" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[13px] font-semibold text-[#111827] dark:text-gray-100">
+                      <span className="block truncate text-[13px] font-bold text-[#111827] dark:text-gray-100">
                         {method.label}
                       </span>
                       <span className="mt-0.5 block truncate text-[11px] text-[#64748B] dark:text-gray-400">
