@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { X, Copy, Check } from "lucide-react";
+import { X } from "lucide-react";
 import { BANKS } from "@/data/banks";
 
 interface BankAccountsDialogProps {
   currentBankCode: string;
   currentAccountNumber: string;
   currentAccountName: string;
-  onCopy: (text: string) => void;
 }
 
 const SAMPLE_ACCOUNTS = [
@@ -21,16 +20,8 @@ export function BankAccountsDialog({
   currentBankCode,
   currentAccountNumber,
   currentAccountName,
-  onCopy,
 }: BankAccountsDialogProps) {
   const [open, setOpen] = useState(false);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  const handleCopy = (text: string, id: string) => {
-    onCopy(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1500);
-  };
 
   const allAccounts = [
     { bankCode: currentBankCode, accountNumber: currentAccountNumber, accountName: currentAccountName, isCurrent: true },
@@ -43,61 +34,58 @@ export function BankAccountsDialog({
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1"
+        className="text-[11px] font-semibold text-[#002855] underline decoration-[#002855]/30 underline-offset-2 hover:text-[#004B87] dark:text-blue-300 dark:decoration-blue-400/40"
       >
-        <span className="text-[10px] sm:text-xs text-[#0066FF] dark:text-blue-400 cursor-pointer hover:underline">Xem tài khoản 9 ngân hàng khác</span>
-        <span className="text-[9px] text-[#5A6A7A] dark:text-gray-400">(Click để xem)</span>
+        Xem tài khoản ngân hàng khác
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#E6EEF7] dark:border-gray-700">
-              <h3 className="text-sm font-semibold text-[#1a3a6b] dark:text-blue-300">TÀI KHOẢN NGÂN HÀNG</h3>
-              <button onClick={() => setOpen(false)} className="p-1 hover:bg-[#F5F6FA] dark:hover:bg-gray-700 rounded" aria-label="Đóng">
-                <X className="w-4 h-4 text-[#5A6A7A] dark:text-gray-400" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="max-h-[80vh] w-full max-w-md overflow-hidden rounded-lg border border-[#CBD7E4] bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-900">
+            <div className="flex items-center justify-between border-b border-[#E3EAF2] px-5 py-3.5 dark:border-gray-700">
+              <h3 className="text-xs font-bold uppercase tracking-[0.1em] text-[#002855] dark:text-blue-300">
+                Tài khoản ngân hàng
+              </h3>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="rounded-md p-1 text-[#64748B] hover:bg-[#EEF3F8] dark:text-gray-400 dark:hover:bg-gray-800"
+                aria-label="Đóng"
+              >
+                <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="overflow-y-auto p-4 space-y-3">
+            <div className="max-h-[calc(80vh-64px)] space-y-2 overflow-y-auto p-3">
               {allAccounts.map((acc) => {
                 const bank = BANKS.find((b) => b.code === acc.bankCode);
-                const itemId = `${acc.bankCode}-${acc.accountNumber}`;
                 return (
                   <div
-                    key={itemId}
-                    className={`rounded-xl border p-3 ${
+                    key={`${acc.bankCode}-${acc.accountNumber}`}
+                    className={`rounded-md border px-3 py-2.5 ${
                       acc.isCurrent
-                        ? "border-[#1a3a6b] dark:border-blue-500 bg-[#F0F5FF] dark:bg-blue-900/30"
-                        : "border-[#DCE6F2] dark:border-gray-600"
+                        ? "border-[#005BAC] bg-[#F2F7FC] dark:border-blue-400 dark:bg-blue-900/20"
+                        : "border-[#CBD7E4] bg-white dark:border-gray-700 dark:bg-gray-800"
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="mb-1.5 flex items-center gap-2">
                       {bank?.logo && (
-                        <img src={bank.logo} alt="" className="w-5 h-5 object-contain" />
+                        <img src={bank.logo} alt="" className="h-5 w-5 rounded-sm object-contain" />
                       )}
-                      <span className="text-xs font-semibold text-[#2D3A4A] dark:text-gray-100">{bank?.name || acc.bankCode}</span>
+                      <span className="truncate text-xs font-semibold text-[#111827] dark:text-gray-100">
+                        {bank?.name || acc.bankCode}
+                      </span>
                       {acc.isCurrent && (
-                        <span className="text-[8px] bg-[#1a3a6b] dark:bg-blue-600 text-white px-1.5 py-0.5 rounded">Mặc định</span>
+                        <span className="rounded-sm bg-[#002855] px-1.5 py-0.5 text-[8px] font-bold uppercase text-white dark:bg-blue-600">
+                          Mặc định
+                        </span>
                       )}
                     </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-[10px] text-[#2D3A4A] dark:text-gray-100">{acc.accountName}</p>
-                        <p className="text-xs font-mono text-[#2D3A4A] dark:text-gray-100">{acc.accountNumber}</p>
-                      </div>
-                      <button
-                        onClick={() => handleCopy(acc.accountNumber, itemId)}
-                        className="p-1.5 rounded-lg hover:bg-[#E6EEF7] dark:hover:bg-gray-700 transition-colors"
-                        aria-label="Sao chép số tài khoản"
-                      >
-                        {copiedId === itemId ? (
-                          <Check className="w-4 h-4 text-green-600" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-[#5A6A7A] dark:text-gray-400" />
-                        )}
-                      </button>
-                    </div>
+                    <p className="truncate text-[11px] text-[#475569] dark:text-gray-300">{acc.accountName}</p>
+                    <p className="mt-0.5 font-mono text-xs tabular-nums text-[#111827] dark:text-gray-100">
+                      {acc.accountNumber}
+                    </p>
                   </div>
                 );
               })}

@@ -73,11 +73,6 @@ export default function QRGenerator() {
     }
   }, [bankCode, accountNumber, accountName, amount, message, qrValue]);
 
-  const handleCopy = useCallback(async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    toast.success("Đã sao chép!");
-  }, []);
-
   const handleReset = useCallback(() => {
     setGenerated(false);
     setBankCode("");
@@ -134,7 +129,6 @@ export default function QRGenerator() {
           isLoading={isLoading}
           logoSize={logoSize}
           qrSize={qrSize}
-          onCopy={handleCopy}
           onReset={handleReset}
         />
       );
@@ -152,7 +146,6 @@ export default function QRGenerator() {
         isLoading={isLoading}
         logoSize={logoSize}
         qrSize={qrSize}
-        onCopy={handleCopy}
         onReset={handleReset}
       />
     );

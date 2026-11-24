@@ -1,7 +1,6 @@
 import { QRCodeSVG } from "qrcode.react";
 import { Check, Plane, Calendar, Clock, MapPin, CreditCard, User, Shield, RotateCcw, Download } from "lucide-react";
 import { BANKS } from "@/data/banks";
-import { PAYMENT_METHODS } from "@/data/payment-methods";
 import { displayAmount, generateBookingCode } from "@/lib/string-utils";
 import { BankAccountsDialog } from "@/components/BankAccountsDialog";
 import caavLogo from "@/assets/caav-logo.svg";
@@ -18,7 +17,6 @@ interface AirlineInvoiceProps {
   isLoading: boolean;
   logoSize: number;
   qrSize: number;
-  onCopy: (text: string) => void;
   onReset: () => void;
   passengerName?: string;
   passengerId?: string;
@@ -46,7 +44,6 @@ export function AirlineInvoice({
   isLoading,
   logoSize,
   qrSize,
-  onCopy,
   onReset,
   passengerName = "",
   passengerId = "",
@@ -237,7 +234,6 @@ export function AirlineInvoice({
                   currentBankCode={bankCode}
                   currentAccountNumber={accountNumber}
                   currentAccountName={accountName}
-                  onCopy={onCopy}
                 />
               </div>
             </div>
